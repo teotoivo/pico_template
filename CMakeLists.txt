@@ -1,7 +1,9 @@
-cmake_minimum_required(VERSION 3.13)
+ccmake_minimum_required(VERSION 3.13)
 
 # Set the Pico SDK path (update it with your own path)
 set(PICO_SDK_PATH $ENV{PICO_SDK_PATH})
+message(STATUS "Using Pico SDK from: ${PICO_SDK_PATH}")
+
 
 # Set the Pico board
 set(PICO_BOARD pico_w)
@@ -23,7 +25,7 @@ include(${PICO_SDK_PATH}/pico_sdk_init.cmake)
 project(${PROJECT_NAME} C CXX ASM)
 
 # Set the C/C++ standard
-set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD 23)
 set(CMAKE_CXX_STANDARD 17)
 
 # Initialize the Pico SDK
@@ -32,12 +34,19 @@ pico_sdk_init()
 # Add the project source files
 add_executable(${PROJECT_NAME}
     src/main.c
+    src/utils.c
     # additional source files
+)
+target_include_directories(${PROJECT_NAME}
+  PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 # Link the Pico SDK libraries
 target_link_libraries(${PROJECT_NAME}
     pico_stdlib
+    hardware_pwm
+    hardware_gpio
     # additional Pico SDK libraries
 )
 
