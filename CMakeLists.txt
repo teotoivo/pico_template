@@ -1,4 +1,4 @@
-ccmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.13)
 
 # Set the Pico SDK path (update it with your own path)
 set(PICO_SDK_PATH $ENV{PICO_SDK_PATH})
@@ -9,8 +9,6 @@ message(STATUS "Using Pico SDK from: ${PICO_SDK_PATH}")
 set(PICO_BOARD pico_w)
 
 set(CMAKE_BUILD_TYPE Debug)
-set(CMAKE_C_FLAGS_DEBUG "-g")
-set(CMAKE_CXX_FLAGS_DEBUG "-g")
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -31,11 +29,10 @@ set(CMAKE_CXX_STANDARD 17)
 # Initialize the Pico SDK
 pico_sdk_init()
 
+file(GLOB_RECURSE SRC_FILES "src/*.c")
 # Add the project source files
 add_executable(${PROJECT_NAME}
-    src/main.c
-    src/utils.c
-    # additional source files
+  ${SRC_FILES}
 )
 target_include_directories(${PROJECT_NAME}
   PRIVATE
