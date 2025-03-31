@@ -3,6 +3,6 @@ openocd -f interface/cmsis-dap.cfg -f target/rp2040.cfg -c "program blink.elf ve
 
 
 terminal:
-/dev/ttyACM0 115200
+screen /dev/ttyACM0 115200
 escaping that:
 CTRL+a > k
